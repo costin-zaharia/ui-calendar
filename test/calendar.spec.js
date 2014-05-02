@@ -84,7 +84,7 @@ describe('uiCalendar', function () {
         
         beforeEach(function(){
             spyOn($.fn, 'fullCalendar');
-            $compile('<div ui-calendar="uiConfig.calendar" ng-model="eventSources"></div>')(scope);
+            $compile('<div ui-calendar="uiConfig.calendar" calendar="calendar" ng-model="eventSources"></div>')(scope);
             scope.$apply();
         });
 
@@ -178,6 +178,14 @@ describe('uiCalendar', function () {
             scope.$apply();
             expect($.fn.fullCalendar.callCount).toEqual(2);
             expect($.fn.fullCalendar.mostRecentCall.args[0].weekends).toEqual(true);
+        });
+
+        it('renders the control when the calendar is made visible', function () {
+            spyOn(scope.calendar, 'is').andReturn(true);
+
+            scope.$apply();
+
+            expect($.fn.fullCalendar.mostRecentCall.args[0]).toBe('render');
         });
 
     });
